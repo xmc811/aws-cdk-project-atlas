@@ -1,0 +1,1 @@
+export const FIRST_BUCKET_NAME = 'mingchu-first-bucket';
