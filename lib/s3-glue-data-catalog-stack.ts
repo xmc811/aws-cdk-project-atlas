@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as glue from 'aws-cdk-lib/aws-glue';
 import { GLUE_CATALOG_BUCKET_NAME } from './constants';
+import { AthenaQueryResultConstruct } from './athena-query-result-construct';
 
 export class S3GlueDataCatalogStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -36,9 +37,16 @@ export class S3GlueDataCatalogStack extends cdk.Stack {
           location: `s3://${GLUE_CATALOG_BUCKET_NAME}/person/`,
           inputFormat: 'org.apache.hadoop.mapred.TextInputFormat',
           outputFormat: 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',
-          serdeInfo: { serializationLibrary: 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' },
+          serdeInfo: {
+            serializationLibrary: 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe',
+            parameters: {
+              'field.delim': ',',
+            },
+           },
         },
       },
     });
+
+    new AthenaQueryResultConstruct(this, 'AthenaQueryResultConstruct');
   }
 }
