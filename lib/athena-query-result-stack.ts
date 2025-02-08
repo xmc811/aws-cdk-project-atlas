@@ -4,17 +4,16 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as athena from 'aws-cdk-lib/aws-athena';
 import { ATHENA_RESULT_BUCKET_NAME } from './constants';
 
-// Athena query result construct
-export class AthenaQueryResultConstruct extends Construct {
+export class AthenaQueryResultStack extends cdk.Stack {
   public readonly queryResultsBucket: s3.Bucket;
-  constructor(scope: Construct, id: string) {
-    super(scope, id);
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
 
     // Create an S3 bucket for Athena query results
     this.queryResultsBucket = new s3.Bucket(this, 'AthenaQueryResultsBucket', {
-        bucketName: ATHENA_RESULT_BUCKET_NAME,
-        versioned: false,
-        removalPolicy: cdk.RemovalPolicy.RETAIN,
+      bucketName: ATHENA_RESULT_BUCKET_NAME,
+      versioned: false,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
     // Create an Athena Workgroup with the query result location

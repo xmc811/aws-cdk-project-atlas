@@ -15,7 +15,7 @@ export class S3SNSNotificationStack extends cdk.Stack {
     const bucket = s3.Bucket.fromBucketName(this, 'MyBucket', FIRST_BUCKET_NAME);
 
     // Create an SNS Topic
-    const topic = new sns.Topic(this, 'MyTopic', {topicName: 'S3DeleteObjectSNSTopic'});
+    const topic = new sns.Topic(this, 'MyTopic', { topicName: 'S3DeleteObjectSNSTopic' });
 
     // Subscribe your email to the SNS Topic
     const email = ssm.StringParameter.valueFromLookup(this, 'personal-email');

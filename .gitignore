@@ -8,3 +8,9 @@ node_modules
 cdk.out
 
 cdk.context.json
+
+# Lambda function layer source files
+lambda_layer/*/python/
+lambda_layer/*/*.zip
+
+.vscode/
